@@ -2,12 +2,14 @@
 layout: page
 permalink: /publications/
 title: publications
-description: Most recent first. See also my <a href="https://scholar.google.com/citations?user=CHP3KbgAAAAJ">Google Scholar profile</a>.
+description: Most recent first.
 nav: true
 nav_order: 1
 ---
 
 <!-- _pages/publications.md -->
+
+See also my [Google Scholar profile](https://scholar.google.com/citations?user=CHP3KbgAAAAJ).
 
 {% include bib_search.liquid %}
 
