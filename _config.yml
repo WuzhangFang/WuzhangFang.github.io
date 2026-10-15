@@ -194,6 +194,12 @@ newsletter:
 collections:
   books:
     output: true
+  # News is off. To turn it on, uncomment the 4 lines below and set
+  # announcements.enabled: true in _pages/about.md.
+  # news:
+  #   defaults:
+  #     layout: post
+  #   output: true
   projects:
     output: true
   teachings:

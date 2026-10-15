@@ -8,6 +8,7 @@ level: Beginner
 tags: [magnons, python, jupyter]
 notebook: assets/jupyter/magnon-dispersion.ipynb
 toc: false
+published: false # kept as a template for notebook tutorials; delete this line in your copy
 ---
 
 {% assign nb_repo_path = site.github_repo | append: "/blob/" | append: site.github_branch | append: "/" | append: page.notebook %}

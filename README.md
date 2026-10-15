@@ -13,6 +13,7 @@ Every push to `main` triggers the **Deploy site** GitHub Action, which builds th
 | Profile photo              | `assets/img/prof_pic.jpg` (replace this file) |
 | Social / contact links     | `_data/socials.yml`                           |
 | Publications               | `_bibliography/papers.bib`                    |
+| News items (off for now)   | `_news/*.md`                                  |
 | Tutorials                  | `_tutorials/*.md`                             |
 | Tutorial notebooks         | `assets/jupyter/*.ipynb`                      |
 | CV PDF (optional)          | `assets/pdf/cv.pdf` + uncomment in `socials.yml` |
@@ -57,7 +58,7 @@ It appears at `/tutorials/my-tutorial/`. A table of contents sidebar is added au
 ## Add a notebook tutorial
 
 1. Run the notebook so its outputs (plots, printed results) are saved, then put it in `assets/jupyter/`.
-2. Copy `_tutorials/magnon-dispersion-notebook.md`, then change the title, description, `notebook:` path, and the path inside `file_exists`.
+2. Copy `_tutorials/magnon-dispersion-notebook.md` (an unpublished template), then change the title, description, `notebook:` path, and the path inside `file_exists`, and delete the `published: false` line.
 
 The page embeds the rendered notebook and adds **Open in Colab** and **View on GitHub** buttons.
 
