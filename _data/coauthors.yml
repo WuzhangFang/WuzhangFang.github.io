@@ -1,0 +1,6 @@
+# Link co-author names in the publication list to their homepages.
+# Key = last name in lowercase. Example:
+#
+# "belashchenko":
+#   - firstname: ["Kirill D.", "Kirill", "K. D.", "KD"]
+#     url: https://example.com

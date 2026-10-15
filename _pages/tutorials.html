@@ -1,0 +1,180 @@
+---
+layout: page
+permalink: /tutorials/
+title: tutorials
+description: Hands-on notes on first-principles calculations, spin dynamics, and the computational tools I use, written as Markdown guides and runnable Jupyter notebooks.
+nav: true
+nav_order: 2
+---
+
+<style>
+  .tut-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0.5rem 0 1.5rem;
+  }
+  .tut-toolbar input {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 6px;
+    background: var(--global-bg-color);
+    color: var(--global-text-color);
+  }
+  .tut-filter {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--global-text-color);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .tut-filter.active {
+    background: var(--global-theme-color);
+    border-color: var(--global-theme-color);
+    color: var(--global-hover-text-color);
+  }
+  .tut-topic {
+    margin-top: 2rem;
+  }
+  .tut-topic h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  .tut-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+  .tut-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background: var(--global-card-bg-color);
+    color: var(--global-text-color) !important;
+    text-decoration: none !important;
+    transition:
+      border-color 0.15s,
+      transform 0.15s;
+  }
+  .tut-card:hover {
+    border-color: var(--global-theme-color);
+    transform: translateY(-2px);
+  }
+  .tut-card h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.4rem;
+    color: var(--global-theme-color);
+  }
+  .tut-card p {
+    font-size: 0.9rem;
+    margin: 0 0 0.75rem;
+    color: var(--global-text-color-light);
+    flex: 1;
+  }
+  .tut-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    color: var(--global-text-color-light);
+  }
+  .tut-badge {
+    font-weight: 600;
+    color: var(--global-theme-color);
+  }
+  .tut-empty {
+    display: none;
+    color: var(--global-text-color-light);
+  }
+</style>
+
+{% assign all_tutorials = site.tutorials | where_exp: "t", "t.draft != true" %}
+
+{% if all_tutorials.size == 0 %}
+  <p>Tutorials are on the way.</p>
+{% else %}
+  <div class="tut-toolbar" role="search">
+    <input id="tut-search" type="search" placeholder="Search tutorials…" aria-label="Search tutorials">
+    <button class="tut-filter active" data-format="all">All</button>
+    <button class="tut-filter" data-format="markdown"><i class="fa-brands fa-markdown"></i> Guides</button>
+    <button class="tut-filter" data-format="notebook"><i class="fa-solid fa-book-open"></i> Notebooks</button>
+  </div>
+
+  {% assign topics = all_tutorials | group_by: "topic" | sort: "name" %}
+  {% for topic in topics %}
+    <section class="tut-topic">
+      <h2>{{ topic.name | default: "Other" }}</h2>
+      <div class="tut-grid">
+        {% assign items = topic.items | sort: "date" | reverse %}
+        {% for t in items %}
+          {% assign fmt = t.format | default: "markdown" %}
+          {% assign words = t.content | number_of_words %}
+          {% assign read_time = words | divided_by: 180 | plus: 1 %}
+          {% assign tag_text = t.tags | join: " " %}
+          {% capture search_text %}{{ t.title }} {{ t.description }} {{ topic.name }} {{ tag_text }} {{ fmt }}{% endcapture %}
+          <a
+            class="tut-card"
+            href="{{ t.url | relative_url }}"
+            data-format="{{ fmt }}"
+            data-text="{{ search_text | strip_newlines | downcase | escape }}"
+          >
+            <h3>{{ t.title }}</h3>
+            <p>{{ t.description }}</p>
+            <div class="tut-meta">
+              {% if fmt == "notebook" %}
+                <span class="tut-badge"><i class="fa-solid fa-book-open"></i> Notebook</span>
+              {% else %}
+                <span class="tut-badge"><i class="fa-brands fa-markdown"></i> Guide</span>
+              {% endif %}
+              {% if t.level %}<span><i class="fa-solid fa-signal"></i> {{ t.level }}</span>{% endif %}
+              <span><i class="fa-regular fa-clock"></i> {{ read_time }} min</span>
+              <span>{{ t.date | date: "%b %Y" }}</span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+  <p class="tut-empty" id="tut-empty">No tutorials match your search.</p>
+
+  <script>
+    (function () {
+      var search = document.getElementById("tut-search");
+      var buttons = document.querySelectorAll(".tut-filter");
+      var format = "all";
+      function apply() {
+        var q = (search.value || "").toLowerCase().trim();
+        var shown = 0;
+        document.querySelectorAll(".tut-topic").forEach(function (section) {
+          var visible = 0;
+          section.querySelectorAll(".tut-card").forEach(function (card) {
+            var ok = (format === "all" || card.dataset.format === format) && (!q || card.dataset.text.indexOf(q) !== -1);
+            card.style.display = ok ? "" : "none";
+            if (ok) visible++;
+          });
+          section.style.display = visible ? "" : "none";
+          shown += visible;
+        });
+        document.getElementById("tut-empty").style.display = shown ? "none" : "block";
+      }
+      buttons.forEach(function (b) {
+        b.addEventListener("click", function () {
+          buttons.forEach(function (x) {
+            x.classList.remove("active");
+          });
+          b.classList.add("active");
+          format = b.dataset.format;
+          apply();
+        });
+      });
+      search.addEventListener("input", apply);
+    })();
+  </script>
+{% endif %}
