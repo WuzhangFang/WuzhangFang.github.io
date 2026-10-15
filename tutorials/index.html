@@ -107,7 +107,7 @@
     display: none;
     color: var(--global-text-color-light);
   }
-</style> <div class="tut-toolbar" role="search"> <input id="tut-search" type="search" placeholder="Search tutorials…" aria-label="Search tutorials"> <button class="tut-filter active" data-format="all">All</button> <button class="tut-filter" data-format="markdown"><i class="fa-brands fa-markdown"></i> Guides</button> <button class="tut-filter" data-format="notebook"><i class="fa-solid fa-book-open"></i> Notebooks</button> </div> <section class="tut-topic"> <h2>Magnons &amp; spin waves</h2> <div class="tut-grid"> <a class="tut-card" href="/tutorials/magnon-dispersion-notebook/" data-format="notebook" data-text="plotting magnon dispersions with numpy a runnable notebook that plots spin-wave dispersions for square and triangular ferromagnets and checks the dk² limit. magnons &amp; spin waves magnons python jupyter notebook"> <h3>Plotting magnon dispersions with NumPy</h3> <p>A runnable notebook that plots spin-wave dispersions for square and triangular ferromagnets and checks the Dk² limit.</p> <div class="tut-meta"> <span class="tut-badge"><i class="fa-solid fa-book-open"></i> Notebook</span> <span><i class="fa-solid fa-signal"></i> Beginner</span> <span><i class="fa-regular fa-clock"></i> 1 min</span> <span>Oct 2026</span> </div> </a> <a class="tut-card" href="/tutorials/linear-spin-wave-theory/" data-format="markdown" data-text="linear spin-wave theory for a heisenberg ferromagnet derive the magnon dispersion with the holstein–primakoff transformation, from the spin hamiltonian to a few lines of numpy. magnons &amp; spin waves magnons spin-waves holstein-primakoff markdown"> <h3>Linear spin-wave theory for a Heisenberg ferromagnet</h3> <p>Derive the magnon dispersion with the Holstein–Primakoff transformation, from the spin Hamiltonian to a few lines of NumPy.</p> <div class="tut-meta"> <span class="tut-badge"><i class="fa-brands fa-markdown"></i> Guide</span> <span><i class="fa-solid fa-signal"></i> Beginner</span> <span><i class="fa-regular fa-clock"></i> 4 min</span> <span>Oct 2026</span> </div> </a> </div> </section> <p class="tut-empty" id="tut-empty">No tutorials match your search.</p> <script>
+</style> <div class="tut-toolbar" role="search"> <input id="tut-search" type="search" placeholder="Search tutorials…" aria-label="Search tutorials"> <button class="tut-filter active" data-format="all">All</button> <button class="tut-filter" data-format="markdown"><i class="fa-brands fa-markdown"></i> Guides</button> <button class="tut-filter" data-format="notebook"><i class="fa-solid fa-book-open"></i> Notebooks</button> </div> <section class="tut-topic"> <h2>Spintronics &amp; Orbitronics</h2> <div class="tut-grid"> <a class="tut-card" href="/tutorials/ohc/" data-format="markdown" data-text="calculation of spin and orbital hall conductivity calculation of spin and orbital hall conductivity in ruo2 using wannier tight-binding hamiltonian spintronics &amp; orbitronics spintronics orbitronics markdown"> <h3>Calculation of spin and orbital Hall conductivity</h3> <p>Calculation of spin and orbital Hall conductivity in RuO2 using Wannier tight-binding Hamiltonian</p> <div class="tut-meta"> <span class="tut-badge"><i class="fa-brands fa-markdown"></i> Guide</span> <span><i class="fa-solid fa-signal"></i> Beginner</span> <span><i class="fa-regular fa-clock"></i> 1 min</span> <span>Oct 2026</span> </div> </a> </div> </section> <p class="tut-empty" id="tut-empty">No tutorials match your search.</p> <script>
     (function () {
       var search = document.getElementById("tut-search");
       var buttons = document.querySelectorAll(".tut-filter");
@@ -159,7 +159,7 @@ ninja.data = [{
     },
   },{id: "nav-publications",
           title: "publications",
-          description: "Most recent first.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/publications/";
@@ -171,16 +171,11 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/tutorials/";
           },
-        },{id: "tutorials-linear-spin-wave-theory-for-a-heisenberg-ferromagnet",
-          title: 'Linear spin-wave theory for a Heisenberg ferromagnet',
-          description: "Derive the magnon dispersion with the Holstein–Primakoff transformation, from the spin Hamiltonian to a few lines of NumPy.",
+        },{id: "tutorials-calculation-of-spin-and-orbital-hall-conductivity",
+          title: 'Calculation of spin and orbital Hall conductivity',
+          description: "Calculation of spin and orbital Hall conductivity in RuO2 using Wannier tight-binding Hamiltonian",
           section: "Tutorials",handler: () => {
-              window.location.href = "/tutorials/linear-spin-wave-theory/";
-            },},{id: "tutorials-plotting-magnon-dispersions-with-numpy",
-          title: 'Plotting magnon dispersions with NumPy',
-          description: "A runnable notebook that plots spin-wave dispersions for square and triangular ferromagnets and checks the Dk² limit.",
-          section: "Tutorials",handler: () => {
-              window.location.href = "/tutorials/magnon-dispersion-notebook/";
+              window.location.href = "/tutorials/ohc/";
             },},{
         id: 'social-email',
         title: 'email',
