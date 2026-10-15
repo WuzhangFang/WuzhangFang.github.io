@@ -13,7 +13,6 @@ Every push to `main` triggers the **Deploy site** GitHub Action, which builds th
 | Profile photo              | `assets/img/prof_pic.jpg` (replace this file) |
 | Social / contact links     | `_data/socials.yml`                           |
 | Publications               | `_bibliography/papers.bib`                    |
-| News items (home page)     | `_news/*.md`                                  |
 | Tutorials                  | `_tutorials/*.md`                             |
 | Tutorial notebooks         | `assets/jupyter/*.ipynb`                      |
 | CV PDF (optional)          | `assets/pdf/cv.pdf` + uncomment in `socials.yml` |
