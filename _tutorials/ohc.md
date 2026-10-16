@@ -108,6 +108,7 @@ $$
 
 The calculated OHC and SHC are shown in the figure below.
 
-![SHC and OHC of RuO2](/assets/img/RuO2_shc_ohc.png){: .img-fluid .d-block .mx-auto width="600"}
+<img src="/assets/img/RuO2_shc_ohc.png" alt="SHC and OHC of RuO2"
+     class="img-fluid d-block mx-auto" width="600" />
 
 The results are consistent with Fig. 1(g) in [[Zhang2026](https://journals.aps.org/prl/abstract/10.1103/lf8d-26b6)].
