@@ -611,14 +611,12 @@ third_party_libraries:
     version: "10.7.0"
   mathjax:
     integrity:
-      # SVG output instead of CHTML: draws math as shapes, so inline math no longer looks bold next to Roboto Light
-      # CHTML (old): tex-mml-chtml.js, sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=
-      js: "sha256-Hxen7ZX/Sksn0Wvw+1+AuRVobuhnPoKYOih27PjLn64="
+      js: "sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="
     local:
       fonts: "output/chtml/fonts/woff-v2/"
     url:
       fonts: "https://cdn.jsdelivr.net/npm/mathjax@{{version}}/es5/output/chtml/fonts/woff-v2/"
-      js: "https://cdn.jsdelivr.net/npm/mathjax@{{version}}/es5/tex-mml-svg.js"
+      js: "https://cdn.jsdelivr.net/npm/mathjax@{{version}}/es5/tex-mml-chtml.js"
     version: "3.2.2"
   tikzjax:
     integrity:
