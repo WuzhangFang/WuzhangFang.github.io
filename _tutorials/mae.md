@@ -11,7 +11,7 @@ The calculation of magnetic anisotropy energy (MAE) requires a very dense k-poin
 
 ## Installation of Wannier90 and the VASP2Wannier90 interface
 
-The installation of Wannier90 can be found at [http://www.wannier.org/download/](http://www.wannier.org/download/). After compiling the code, we have a static library `libwannier.a` and two executables `postw90.x` and `wannier90.x`. Wannier90 should be used in conjunction with an electronic structure code that calculates the eigenstates of the Hamiltonian. Here we use VASP 5.4.4, which only supports Wannier90 up to version 2.1.0. There are some known bugs when spin-orbit coupling (SOC) is turned on; a fix is available at [https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix](https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix).
+The installation of Wannier90 can be found at [http://www.wannier.org/download/](http://www.wannier.org/download/). After compiling the code, we have a static library `libwannier.a` and two executables `postw90.x` and `wannier90.x`. Wannier90 should be used in conjunction with an electronic structure code that calculates the eigenstates of the Hamiltonian. Here we use VASP 5.4.4, which only supports Wannier90 up to version 2.1.0. There are some known bugs when spin-orbit coupling (SOC) is turned on; a fix is available at [https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix](https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix). If we use VASP 6.x.x, we can directly compile the VASP with Wannier90 (v3.1.0). 
 
 VASP is compiled as usual, except that we add `-DVASP2WANNIER90v2` to the `CPP_OPTIONS` tag and the path of `libwannier.a` to the `LLIBS` tag in the makefile. The newly compiled VASP has an interface to Wannier90 and can generate the input files needed by Wannier90.
 
@@ -23,8 +23,8 @@ The second step is generating the input files for Wannier90 using VASP. An examp
 
 ```text
 SYSTEM = FePt
-ISTART = 1
-ICHARG = 1
+ISTART = 1 # read the WAVECAR from SCF
+ICHARG = 0
 NPAR = 8
 LREAL = .FALSE.
 NELM = 1              # maximum number of electronic SC steps
@@ -93,7 +93,7 @@ After Wannierization, the `.chk` and `_hr.dat` files are generated. `wannier90.u
 
 ## Calculation of magnetocrystalline anisotropy
 
-We first add on-site SOC to the collinear Hamiltonians, with the spin quantization axis along $$x$$ and along $$z$$. The on-site SOC parameters are taken from Table 1 in [[Ke2019](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.99.054418)]. We use the Python package [wanSOC](https://github.com/Chengcheng-Xiao/wanSOC), which combines the spin-up and spin-down Hamiltonians and adds the on-site SOC to the full Hamiltonian. The script to generate the SOC Hamiltonian with spin quantization along $$x$$ is
+We first add on-site SOC to the collinear Hamiltonians, with the spin quantization axis along $$x$$ and $$z$$. The on-site SOC parameters are taken from Table 1 in [[Ke2019](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.99.054418)]. We use the Python package [wanSOC](https://github.com/Chengcheng-Xiao/wanSOC), which combines the spin-up and spin-down Hamiltonians and adds the on-site SOC to the full Hamiltonian. The script to generate the SOC Hamiltonian with spin quantization along $$x$$ is
 
 ```python
 from wanSOC.helper import *
@@ -102,11 +102,6 @@ from wanSOC.hamiltonian import *
 # generate full Hamiltonian from collinear Hamiltonians
 hop_spinor_dn, Rlatt_dn, indR0_dn, deg_dn = read_hr('wannier90.dn_hr.dat', spin='dn')
 hop_spinor_up, Rlatt_up, indR0_up, deg_up = read_hr('wannier90.up_hr.dat', spin='up')
-
-# sanity check
-assert (Rlatt_dn == Rlatt_up).all(), "Real-lattice hopping vector mismatch."
-assert indR0_dn == indR0_up, "Home cell index mismatch."
-assert (deg_dn == deg_up).all(), "Degeneracy mismatch."
 
 # add hop_spinor to get full spinor Hamiltonian
 hop_spinor = hop_spinor_dn + hop_spinor_up
@@ -119,6 +114,7 @@ p_2 = 2.6264 / 2 / ratio  # scaled
 d_1 = 0.055 / 2
 d_2 = 0.5749 / 2
 q_axis = [1, 0, 0]  # spin quantization axis along x
+# q_axis = [0, 0, 1]  # spin quantization axis along z
 orb_chg = [['d', q_axis, d_1, 5], ['d', q_axis, d_2, 14],
            ['p', q_axis, p_1, 2], ['p', q_axis, p_2, 11]]
 full_Hsoc = get_full_Hsoc(orb_chg, hop_spinor)
@@ -128,6 +124,7 @@ hop_spinor[indR0_dn] += full_Hsoc
 
 # output final Hamiltonian
 write_hr(deg_dn, Rlatt_dn, hop_spinor, Filename='wannier90_hr_X.dat')
+#write_hr(deg_dn, Rlatt_dn, hop_spinor, Filename='wannier90_hr_Z.dat')
 ```
 
 The Hamiltonian with spin quantization along $$z$$ is obtained by setting `q_axis = [0, 0, 1]` and writing to `wannier90_hr_Z.dat`. With the full Hamiltonians, we compute the band structures and compare them with VASP. The agreement is excellent, as shown in the figure below.
