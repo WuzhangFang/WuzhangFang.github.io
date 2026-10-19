@@ -1,0 +1,203 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Calculating magnetic anisotropy energy using Wannier interpolation | Wuzhang Fang </title> <meta name="author" content="Wuzhang Fang"> <meta name="description" content="Calculating the magnetic anisotropy energy of FePt using a Wannier tight-binding Hamiltonian with on-site spin-orbit coupling"> <meta name="keywords" content="Wuzhang Fang, first-principles, density functional theory, spintronics, spin-orbit torque, magnon-phonon coupling, magnetism"> <meta property="og:site_name" content="Wuzhang Fang"> <meta property="og:type" content="website"> <meta property="og:title" content="Wuzhang Fang | Calculating magnetic anisotropy energy using Wannier interpolation"> <meta property="og:url" content="https://wuzhangfang.github.io/tutorials/mae/"> <meta property="og:description" content="Calculating the magnetic anisotropy energy of FePt using a Wannier tight-binding Hamiltonian with on-site spin-orbit coupling"> <meta property="og:locale" content="en"> <meta name="twitter:card" content="summary"> <meta name="twitter:title" content="Calculating magnetic anisotropy energy using Wannier interpolation"> <meta name="twitter:description" content="Calculating the magnetic anisotropy energy of FePt using a Wannier tight-binding Hamiltonian with on-site spin-orbit coupling"> <script type="application/ld+json">
+    {
+        "author":
+        {
+            "@type": "Person",
+            "name": "Wuzhang Fang"
+        },
+        "url": "https://wuzhangfang.github.io/tutorials/mae/",
+        "@type": "WebSite",
+        "description": "Calculating the magnetic anisotropy energy of FePt using a Wannier tight-binding Hamiltonian with on-site spin-orbit coupling",
+        "headline": "Calculating magnetic anisotropy energy using Wannier interpolation",
+        
+        "sameAs": ["https://scholar.google.com/citations?user=CHP3KbgAAAAJ","https://github.com/WuzhangFang"],
+        
+        "name": "Wuzhang Fang",
+        "@context": "https://schema.org"
+    }
+  </script> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.css" integrity="sha256-zTN0r+0OKaIv2xqeNNIYxNk0pWJ6+IqPGc1iDgVzWF0=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%A7%B2&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://wuzhangfang.github.io/tutorials/mae/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <link rel="stylesheet" href="/assets/al_email_protect/css/email-protect.css"> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Wuzhang Fang </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item active"> <a class="nav-link" href="/tutorials/">tutorials <span class="sr-only">(current)</span> </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">Calculating magnetic anisotropy energy using Wannier interpolation</h1> <p class="post-meta"> Created on October 19, 2026 </p> <p class="post-tags"> <i class="fa-solid fa-calendar fa-sm"></i> 2026   ·   <i class="fa-solid fa-hashtag fa-sm"></i> magnetism   <i class="fa-solid fa-hashtag fa-sm"></i> magnetic anisotropy   <i class="fa-solid fa-hashtag fa-sm"></i> wannier90 </p> </header> <article class="post-content"> <div id="markdown-content"> <p>The calculation of magnetic anisotropy energy (MAE) requires a very dense k-point mesh and can be very time-consuming. Using a Wannier Hamiltonian with a much smaller basis set can significantly reduce the computational time. In this tutorial, we use FePt, which has a large perpendicular magnetic anisotropy (PMA), as an example to illustrate this approach.</p> <h2 id="installation-of-wannier90-and-the-vasp2wannier90-interface">Installation of Wannier90 and the VASP2Wannier90 interface</h2> <p>The installation of Wannier90 can be found at <a href="http://www.wannier.org/download/" rel="external nofollow noopener" target="_blank">http://www.wannier.org/download/</a>. After compiling the code, we have a static library <code class="language-plaintext highlighter-rouge">libwannier.a</code> and two executables <code class="language-plaintext highlighter-rouge">postw90.x</code> and <code class="language-plaintext highlighter-rouge">wannier90.x</code>. Wannier90 should be used in conjunction with an electronic structure code that calculates the eigenstates of the Hamiltonian. Here we use VASP 5.4.4, which only supports Wannier90 up to version 2.1.0. There are some known bugs when spin-orbit coupling (SOC) is turned on; a fix is available at <a href="https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix" rel="external nofollow noopener" target="_blank">https://github.com/Chengcheng-Xiao/VASP2WAN90_v2_fix</a>.</p> <p>VASP is compiled as usual, except that we add <code class="language-plaintext highlighter-rouge">-DVASP2WANNIER90v2</code> to the <code class="language-plaintext highlighter-rouge">CPP_OPTIONS</code> tag and the path of <code class="language-plaintext highlighter-rouge">libwannier.a</code> to the <code class="language-plaintext highlighter-rouge">LLIBS</code> tag in the makefile. The newly compiled VASP has an interface to Wannier90 and can generate the input files needed by Wannier90.</p> <h2 id="generation-of-the-wannier-hamiltonian">Generation of the Wannier Hamiltonian</h2> <p>The first step is an accurate self-consistent collinear calculation of FePt using VASP. It is better to fix the number of bands by setting <code class="language-plaintext highlighter-rouge">NBANDS = 32</code>. After the self-consistent calculation, we analyze the projected band structures and density of states to determine the energy window and the band characters.</p> <p>The second step is generating the input files for Wannier90 using VASP. An example <code class="language-plaintext highlighter-rouge">INCAR</code> is</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM = FePt
+ISTART = 1
+ICHARG = 1
+NPAR = 8
+LREAL = .FALSE.
+NELM = 1              # maximum number of electronic SC steps
+PREC = Accurate
+ALGO = None
+ENCUT = 400
+KSPACING = 0.15
+ISPIN = 2
+LORBIT = 11
+MAGMOM = 3 0
+LMAXMIX = 4
+GGA_COMPAT = .FALSE.
+NBANDS = 32
+ISYM = 2
+EDIFF = 1E-07
+ISMEAR = -5
+LWANNIER90 = .TRUE.
+LWAVE = .FALSE.
+LCHARG = .FALSE.
+</code></pre></div></div> <p>We also prepare two Wannier90 input files, <code class="language-plaintext highlighter-rouge">wannier90.up.win</code> and <code class="language-plaintext highlighter-rouge">wannier90.dn.win</code>, which contain the following tags:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>! for generating the necessary files using VASP
+num_bands = 32
+num_wann  = 18
+begin projections
+Fe: s;p;d
+Pt: s;p;d
+end projections
+
+! disentanglement
+dis_win_min   = -2.0d0
+dis_win_max   = 50.0d0
+dis_froz_min  = -2.0d0
+dis_froz_max  = 20.0d0
+dis_num_iter  = 8000
+dis_mix_ratio = 1.0
+dis_conv_tol  = 1.0e-8
+
+! Wannierization
+num_iter    = 2000
+conv_tol    = 1.0e-5
+conv_window = 2
+
+write_hr        = true   ! write the Hamiltonian
+write_xyz       = true
+guiding_centres = true
+</code></pre></div></div> <p>Here <code class="language-plaintext highlighter-rouge">num_wann</code> is the number of Wannier functions, which equals the number of initial projections. After running VASP, the <code class="language-plaintext highlighter-rouge">.mmn</code>, <code class="language-plaintext highlighter-rouge">.amn</code>, and <code class="language-plaintext highlighter-rouge">.eig</code> files for the spin-up and spin-down channels are generated. VASP also adds the structure and k-point coordinates to the <code class="language-plaintext highlighter-rouge">.win</code> files if they are missing. It is better to let VASP do this to avoid potential mistakes. The last step is running Wannier90:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun wannier90.x wannier90.up.win
+mpirun wannier90.x wannier90.dn.win
+</code></pre></div></div> <p>After Wannierization, the <code class="language-plaintext highlighter-rouge">.chk</code> and <code class="language-plaintext highlighter-rouge">_hr.dat</code> files are generated. <code class="language-plaintext highlighter-rouge">wannier90.up_hr.dat</code> and <code class="language-plaintext highlighter-rouge">wannier90.dn_hr.dat</code> contain the Wannier Hamiltonian \(H_{mn}(\mathbf{R}) = \langle w_m(\mathbf{0})\lvert \hat{H} \rvert w_n(\mathbf{R})\rangle\) for the spin-up and spin-down channels. The format of <code class="language-plaintext highlighter-rouge">_hr.dat</code> is:</p> <ul> <li>The 1st line is a comment line.</li> <li>The 2nd line is the number of Wannier functions.</li> <li>The 3rd line is the number of \(\mathbf{R}\) lattice vectors.</li> <li>The following lines give the degeneracy of each lattice vector, 15 items per line.</li> <li>The remaining lines are the tight-binding parameters. The first three columns are the coordinates of \(\mathbf{R}\) in terms of lattice vectors, the 4th and 5th columns are the Wannier function indices \(m\) and \(n\), and the last two columns are the real and imaginary parts of the matrix element.</li> </ul> <h2 id="calculation-of-magnetocrystalline-anisotropy">Calculation of magnetocrystalline anisotropy</h2> <p>We first add on-site SOC to the collinear Hamiltonians, with the spin quantization axis along \(x\) and along \(z\). The on-site SOC parameters are taken from Table 1 in [<a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.99.054418" rel="external nofollow noopener" target="_blank">Ke2019</a>]. We use the Python package <a href="https://github.com/Chengcheng-Xiao/wanSOC" rel="external nofollow noopener" target="_blank">wanSOC</a>, which combines the spin-up and spin-down Hamiltonians and adds the on-site SOC to the full Hamiltonian. The script to generate the SOC Hamiltonian with spin quantization along \(x\) is</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">wanSOC.helper</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">wanSOC.hamiltonian</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># generate full Hamiltonian from collinear Hamiltonians
+</span><span class="n">hop_spinor_dn</span><span class="p">,</span> <span class="n">Rlatt_dn</span><span class="p">,</span> <span class="n">indR0_dn</span><span class="p">,</span> <span class="n">deg_dn</span> <span class="o">=</span> <span class="nf">read_hr</span><span class="p">(</span><span class="sh">'</span><span class="s">wannier90.dn_hr.dat</span><span class="sh">'</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="sh">'</span><span class="s">dn</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">hop_spinor_up</span><span class="p">,</span> <span class="n">Rlatt_up</span><span class="p">,</span> <span class="n">indR0_up</span><span class="p">,</span> <span class="n">deg_up</span> <span class="o">=</span> <span class="nf">read_hr</span><span class="p">(</span><span class="sh">'</span><span class="s">wannier90.up_hr.dat</span><span class="sh">'</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="sh">'</span><span class="s">up</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># sanity check
+</span><span class="nf">assert </span><span class="p">(</span><span class="n">Rlatt_dn</span> <span class="o">==</span> <span class="n">Rlatt_up</span><span class="p">).</span><span class="nf">all</span><span class="p">(),</span> <span class="sh">"</span><span class="s">Real-lattice hopping vector mismatch.</span><span class="sh">"</span>
+<span class="k">assert</span> <span class="n">indR0_dn</span> <span class="o">==</span> <span class="n">indR0_up</span><span class="p">,</span> <span class="sh">"</span><span class="s">Home cell index mismatch.</span><span class="sh">"</span>
+<span class="nf">assert </span><span class="p">(</span><span class="n">deg_dn</span> <span class="o">==</span> <span class="n">deg_up</span><span class="p">).</span><span class="nf">all</span><span class="p">(),</span> <span class="sh">"</span><span class="s">Degeneracy mismatch.</span><span class="sh">"</span>
+
+<span class="c1"># add hop_spinor to get full spinor Hamiltonian
+</span><span class="n">hop_spinor</span> <span class="o">=</span> <span class="n">hop_spinor_dn</span> <span class="o">+</span> <span class="n">hop_spinor_up</span>
+
+<span class="c1"># [orbital_type, quantization_axis, strength/2, orbital_index (start from 1)]
+# here we adjust the SOC strength for the p orbitals on the Pt atom
+</span><span class="n">ratio</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="o">/</span> <span class="mf">0.50</span>  <span class="c1"># from Table VI in PRB 99, 054418 (2019)
+</span><span class="n">p_1</span> <span class="o">=</span> <span class="mf">0.1972</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">p_2</span> <span class="o">=</span> <span class="mf">2.6264</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">ratio</span>  <span class="c1"># scaled
+</span><span class="n">d_1</span> <span class="o">=</span> <span class="mf">0.055</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">d_2</span> <span class="o">=</span> <span class="mf">0.5749</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">q_axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># spin quantization axis along x
+</span><span class="n">orb_chg</span> <span class="o">=</span> <span class="p">[[</span><span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">,</span> <span class="n">q_axis</span><span class="p">,</span> <span class="n">d_1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">,</span> <span class="n">q_axis</span><span class="p">,</span> <span class="n">d_2</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+           <span class="p">[</span><span class="sh">'</span><span class="s">p</span><span class="sh">'</span><span class="p">,</span> <span class="n">q_axis</span><span class="p">,</span> <span class="n">p_1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="sh">'</span><span class="s">p</span><span class="sh">'</span><span class="p">,</span> <span class="n">q_axis</span><span class="p">,</span> <span class="n">p_2</span><span class="p">,</span> <span class="mi">11</span><span class="p">]]</span>
+<span class="n">full_Hsoc</span> <span class="o">=</span> <span class="nf">get_full_Hsoc</span><span class="p">(</span><span class="n">orb_chg</span><span class="p">,</span> <span class="n">hop_spinor</span><span class="p">)</span>
+
+<span class="c1"># add H_soc to the on-site block of the full Hamiltonian
+</span><span class="n">hop_spinor</span><span class="p">[</span><span class="n">indR0_dn</span><span class="p">]</span> <span class="o">+=</span> <span class="n">full_Hsoc</span>
+
+<span class="c1"># output final Hamiltonian
+</span><span class="nf">write_hr</span><span class="p">(</span><span class="n">deg_dn</span><span class="p">,</span> <span class="n">Rlatt_dn</span><span class="p">,</span> <span class="n">hop_spinor</span><span class="p">,</span> <span class="n">Filename</span><span class="o">=</span><span class="sh">'</span><span class="s">wannier90_hr_X.dat</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <p>The Hamiltonian with spin quantization along \(z\) is obtained by setting <code class="language-plaintext highlighter-rouge">q_axis = [0, 0, 1]</code> and writing to <code class="language-plaintext highlighter-rouge">wannier90_hr_Z.dat</code>. With the full Hamiltonians, we compute the band structures and compare them with VASP. The agreement is excellent, as shown in the figure below.</p> <div class="row justify-content-center"> <div class="col-sm-6 mt-3 mt-md-0"> <img src="/assets/img/FePt_band_X.png" alt="FePt band structure with spin quantization along x" class="img-fluid d-block mx-auto"> <p class="text-center">(a) Spin quantization along <i>x</i></p> </div> <div class="col-sm-6 mt-3 mt-md-0"> <img src="/assets/img/FePt_band_Z.png" alt="FePt band structure with spin quantization along z" class="img-fluid d-block mx-auto"> <p class="text-center">(b) Spin quantization along <i>z</i></p> </div> </div> <p class="text-center">Band structures of FePt calculated from the Wannier Hamiltonians (red dashed lines) and VASP (black lines).</p> <p>The magnetocrystalline anisotropy (MCA) is calculated as the difference between the grand canonical potentials with the magnetization along \(x\) and \(z\),</p> \[K = \sum_{n\mathbf{k}} \left[ \left(\varepsilon^{x}_{n\mathbf{k}} - E_F\right) f^{x}_{n\mathbf{k}} - \left(\varepsilon^{z}_{n\mathbf{k}} - E_F\right) f^{z}_{n\mathbf{k}} \right],\] <p>where \(\varepsilon_{n\mathbf{k}}\) is the band energy, \(\mathbf{k}\) is the wave vector in the first Brillouin zone, \(n\) is the band index, \(E_F\) is the Fermi energy from the collinear calculation, and \(f_{n\mathbf{k}}\) is the band occupancy. Here we use <a href="https://www.wanniertools.org/" rel="external nofollow noopener" target="_blank">WannierTools</a> to diagonalize the Hamiltonian and a Fermi function at 100 K for the band occupancy. The calculated MCA is 2.4 meV/f.u., which is smaller than the DFT value of 2.8 meV/f.u. from VASP. Using the tetrahedron method with Blöchl corrections [<a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.49.16223" rel="external nofollow noopener" target="_blank">Blöchl1994</a>] to perform the Brillouin-zone integration is expected to improve the result; this is left for future investigation.</p> </div> </article> </div> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Wuzhang Fang. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.js" integrity="sha256-lo/r+jQ81wWrxdIiiiEEd538z4+dTJTt+leOuAS7GCw=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-publications",
+          title: "publications",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-tutorials",
+          title: "tutorials",
+          description: "Hands-on notes on first-principles calculations, spin dynamics, and the computational tools I use, written as Markdown guides and runnable Jupyter notebooks.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/tutorials/";
+          },
+        },{id: "tutorials-calculating-orbital-hall-conductivity",
+          title: 'Calculating orbital Hall conductivity',
+          description: "Calculating the orbital Hall conductivity of RuO2 using a Wannier tight-binding Hamiltonian",
+          section: "Tutorials",handler: () => {
+              window.location.href = "/tutorials/ohc/";
+            },},{id: "tutorials-calculating-magnetic-anisotropy-energy-using-wannier-interpolation",
+          title: 'Calculating magnetic anisotropy energy using Wannier interpolation',
+          description: "Calculating the magnetic anisotropy energy of FePt using a Wannier tight-binding Hamiltonian with on-site spin-orbit coupling",
+          section: "Tutorials",handler: () => {
+              window.location.href = "/tutorials/mae/";
+            },},{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%77%66%61%6E%67%34%37@%77%69%73%63.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=CHP3KbgAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/WuzhangFang", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> <script defer src="/assets/al_email_protect/js/email-protect.js"></script> </body> </html>
