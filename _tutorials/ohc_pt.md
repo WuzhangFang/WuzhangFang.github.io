@@ -1,5 +1,5 @@
 ---
-title: Calculating orbital and spin Hall conductivity of Pt
+title: Orbital and spin Hall conductivity of Pt
 description: Calculating the orbital Hall conductivity of Pt using a Wannier tight-binding Hamiltonian
 date: 2026-10-21
 topic: Spintronics & Orbitronics
