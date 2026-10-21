@@ -17,7 +17,7 @@ $$
 \mathbf{v}_{nm}(\mathbf{R}) = \frac{i}{\hbar} \left( \mathbf{R} H_{nm}(\mathbf{R}) + \sum_{\mathbf{R}'} \sum_{j} \left[ H_{nj}(\mathbf{R}') \mathbf{r}_{jm}(\mathbf{R}-\mathbf{R}') - \mathbf{r}_{nj}(\mathbf{R}') H_{jm}(\mathbf{R}-\mathbf{R}') \right] \right)
 $$
 
-where $$H_{nm}(\mathbf{R}) = \langle n\mathbf{0}|\hat{H}|m\mathbf{R}\rangle$$ and $$\mathbf{r}_{nm}(\mathbf{R}) = \langle n\mathbf{0}|\hat{\mathbf{r}}|m\mathbf{R}\rangle$$.
+where $$H_{nm}(\mathbf{R}) = \langle n\mathbf{0}\vert\hat{H}\vert m\mathbf{R}\rangle$$ and $$\mathbf{r}_{nm}(\mathbf{R}) = \langle n\mathbf{0}\vert\hat{\mathbf{r}}\vert m\mathbf{R}\rangle$$.
 
 In some calculations, only the first term is considered. In momentum space, it is equivalent to
 
