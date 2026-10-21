@@ -106,7 +106,7 @@ $$
 
 ## Calculation of OHC and SHC
 
-The calculated OHC and SHC are shown in the figure below.
+The calculated OHC and SHC of RuO2 are shown in the figure below.
 
 <img src="/assets/img/RuO2_shc_ohc.png" alt="SHC and OHC of RuO2"
      class="img-fluid d-block mx-auto" width="600" />
