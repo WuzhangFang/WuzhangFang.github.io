@@ -7,7 +7,7 @@ format: markdown
 tags: [spintronics, orbitronics]
 ---
 
-In spintronics, spin angular momentum is used as the information carrier. In recent years, it is widely proposed to use orbital angular momentum as the alternative information carrier. In this tutorial, we show how to calculate orbital Hall conductivity (OHC) in RuO2.
+In spintronics, spin angular momentum is used as the information carrier. In recent years, it is widely proposed to use orbital angular momentum as the alternative information carrier.
 
 ## Linear response theory
 
