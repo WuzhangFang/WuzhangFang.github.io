@@ -1,13 +1,13 @@
 ---
 title: Calculating orbital Hall conductivity
-description: Calculating the orbital Hall conductivity of RuO2 using a Wannier tight-binding Hamiltonian
+description: Calculating the orbital Hall conductivity using a Wannier tight-binding Hamiltonian
 date: 2026-10-16
 topic: Spintronics & Orbitronics
 format: markdown
 tags: [spintronics, orbitronics]
 ---
 
-In spintronics, spin angular momentum is used as the information carrier. In recent years, it is widely proposed to use orbital angular momentum as the alternative information carrier.
+In spintronics, spin angular momentum is used as the information carrier. In recent years, it is widely proposed to use orbital angular momentum as the alternative information carrier. In the orbital Hall effect (OHE), an applied electric field drives a transverse flow of orbital angular momentum, and the orbital Hall conductivity (OHC) measures how strong that response is.
 
 ## Linear response theory
 
